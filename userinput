@@ -1,0 +1,34 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing import image
+
+# Load the trained model
+model = load_model('mynew_model.h5')
+
+# Define your class labels (update this list based on your labels)
+class_labels = [ 'Actinic Keratosis', 'Actinic Keratosis','Atopic Dermatitis','Benign Keratosis','Dermatofibroma','Melanocytic nevus','Melanoma','Squamous cell carcinoma','Tinea Ringworm Candidiasis','Vascular lesion',]  # Update this with your actual class labels
+
+# Function to preprocess the image
+def preprocess_image(image_path, target_size=(200, 200)):
+    img = image.load_img(image_path, target_size=target_size)
+    img_array = image.img_to_array(img)
+    img_array_expanded_dims = np.expand_dims(img_array, axis=0)
+    return img_array_expanded_dims / 255.0, img
+
+# Function to predict the class of an image and display the image with the predicted label
+def predict_and_display_image(image_path):
+    preprocessed_image, original_img = preprocess_image(image_path)
+    prediction = model.predict(preprocessed_image)
+    predicted_class = np.argmax(prediction, axis=1)[0]
+    predicted_class_label = class_labels[predicted_class]
+
+    # Display the image
+    plt.imshow(original_img)
+    plt.title(f"Predicted Class: {predicted_class_label}")
+    plt.axis('off')  # Hide the axis
+    plt.show()
+
+# Example usage - Update the path to the image you want to classify
+image_path = '/content/drive/MyDrive/test/Atopic Dermatitis/1_26.jpg'
+predict_and_display_image(image_path)
