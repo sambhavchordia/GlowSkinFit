@@ -1,0 +1,5 @@
+from google.colab import files
+
+
+# For H5 format
+files.download('mynew_model.h5')
