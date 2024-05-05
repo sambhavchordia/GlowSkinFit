@@ -1,0 +1,2 @@
+model_save_path = "/content/drive/MyDrive/Colab Notebooks/mynew_model.h5"
+model.save(model_save_path)
