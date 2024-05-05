@@ -1,0 +1,11 @@
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
+test_datagen = ImageDataGenerator(rescale=1./255)
+
+test_generator = test_datagen.flow_from_directory(
+    '/content/drive/MyDrive/test',  # Update this path to your test data
+    target_size=(200, 200),
+    batch_size=32,
+    class_mode='categorical',  # or 'binary' for binary classification
+    shuffle=False  # Important for correct label matching
+)
