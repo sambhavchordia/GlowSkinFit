@@ -1,1 +1,4 @@
+from tensorflow.keras.models import load_model
 
+# Load the refined model
+model = load_model('mynew_model.h5')
