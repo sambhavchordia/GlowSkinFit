@@ -1,0 +1,15 @@
+# Load the best model
+model = tf.keras.models.load_model('mynew_model.h5')
+
+# If you have a separate test set, set it up similar to train_generator
+# For demonstration, we use validation_generator to simulate test evaluation
+
+predictions = model.predict(validation_generator, steps=np.ceil(validation_generator.samples / validation_generator.batch_size))
+predicted_classes = np.argmax(predictions, axis=1)
+true_classes = validation_generator.classes
+true_class_labels = list(validation_generator.class_indices.keys())  # Getting the class labels from the generator
+
+# Trim true_classes to match predicted_classes' length if necessary
+true_classes = true_classes[:len(predicted_classes)]
+
+print(classification_report(true_classes, predicted_classes, target_names=true_class_labels))
